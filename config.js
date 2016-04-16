@@ -23,10 +23,5 @@ module.exports = {
 	},
   mysql: {
     connection: process.env.MYSQL_CONNECTION
-  },
-  google: {
-    places: {
-      apikey: process.env.GOOGLE_PLACES_API_KEY
-    }
   }
 }
