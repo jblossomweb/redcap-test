@@ -31,6 +31,21 @@ if (config.node.env === 'development') {
   app.use(logger('dev'))
 }
 
+// autoload routes
+var routes = {}
+var routesPath = path.join(__dirname, 'routes')
+fs.readdirSync(routesPath).forEach(function (file) {
+  if (file.indexOf('.js') >= 0) {
+    var route = file.substr(0, file.lastIndexOf('.'))
+    routes[route] = require(routesPath + '/' + file)
+    if(route == 'index') {
+      app.use('/', routes[route])
+    } else {
+      app.use('/'+route, routes[route])
+    }
+  }
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found')
