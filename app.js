@@ -10,8 +10,8 @@ var app = express()
 
 // connect to database
 orm.db = orm.connect(config[config.db.type].connection, function(error, db){
-	if(!error) return
-	throw(error)
+  if(!error) return
+  throw(error)
 })
 
 // view engine setup
