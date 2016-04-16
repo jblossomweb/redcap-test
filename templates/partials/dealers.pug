@@ -1,0 +1,16 @@
+table.table.table-striped(st-table="dealers")
+  thead
+    tr
+      th.pointer(st-sort="name") Name
+      th.pointer(st-sort="city") City
+      th.pointer(st-sort="state") State
+      th &nbsp;
+  tbody
+    tr(ng-repeat="dealer in dealers")
+      td {{ dealer.name }}
+      td {{ dealer.city }}
+      td {{ dealer.state }}
+      td
+        a.btn.btn-sm.btn-primary.pull-right(href="{{ dealer.website }}" target="_blank")
+          span.glyphicon.glyphicon-globe
+          | &nbsp;&nbsp;Website
