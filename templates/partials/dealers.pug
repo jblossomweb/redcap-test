@@ -5,6 +5,14 @@ table.table.table-striped(st-table="dealers")
       th.pointer(st-sort="city") City
       th.pointer(st-sort="state") State
       th &nbsp;
+    tr
+      th
+        input.input-sm.form-control(type="search" st-search="name" placeholder="filter")
+      th
+        input.input-sm.form-control(type="search" st-search="city" placeholder="filter")
+      th
+        input.input-sm.form-control(type="search" st-search="state" placeholder="filter")
+      th &nbsp;
   tbody
     tr(ng-repeat="dealer in dealers")
       td {{ dealer.name }}
