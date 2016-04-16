@@ -1,10 +1,12 @@
 .container
   .row
     .col-md-12
-      h1
-        a(href="")
-          img(src="http://www.redcapvalet.com/images/logo3.png")
-      h3 Dealerships
+      h3 {{ title }}
   .row
     .col-md-12
-      include partials/dealers.pug
+      p {{ desc }}
+  .row
+    .col-md-12
+      ul
+        li
+          a(href="/#/dealers") Dealerships

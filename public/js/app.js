@@ -8,7 +8,12 @@ function($stateProvider, $urlRouterProvider) {
     .state('home', {
       url: '/home',
       templateUrl: 'templates/home',
-      controller: 'HomeCtrl',
+      controller: 'HomeCtrl'
+    })
+    .state('dealers', {
+      url: '/dealers',
+      templateUrl: 'templates/dealers',
+      controller: 'DealersCtrl',
       resolve: {
         dealerPromise: ['dealerFactory', function(dealerFactory){
             return dealerFactory.list()
@@ -19,7 +24,29 @@ function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('home')
 }])
 
+// generic, stateless modal controller, accepts a data param if needed
+app.controller('ModalCtrl', [
+'$scope',
+'$uibModalInstance',
+'data',
+function($scope, $uibModalInstance, data) {
+  $scope.data = data
+  $scope.submit = function(newData) {
+    $uibModalInstance.close(newData)
+  }
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel')
+  }
+}])
+
 app.controller('HomeCtrl', [
+'$scope',
+function($scope) {
+    $scope.title = "Demo Home"
+    $scope.desc = "This is a sample project, for a skills test."
+}])
+
+app.controller('DealersCtrl', [
 '$scope',
 'dealerFactory',
 function($scope, dealerFactory) {
