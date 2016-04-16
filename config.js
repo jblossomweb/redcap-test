@@ -21,7 +21,12 @@ module.exports = {
 	db: {
 		type: 'mysql'
 	},
-    mysql: {
-        connection: process.env.MYSQL_CONNECTION
+  mysql: {
+    connection: process.env.MYSQL_CONNECTION
+  },
+  google: {
+    places: {
+      apikey: process.env.GOOGLE_PLACES_API_KEY
     }
+  }
 }
