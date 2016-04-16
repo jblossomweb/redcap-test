@@ -8,3 +8,6 @@
 .st-sort-descent:after {
   content: '\25BC';
 }
+.modal-container {
+  padding:12px;
+}

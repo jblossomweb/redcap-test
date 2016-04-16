@@ -24,6 +24,36 @@ function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('home')
 }])
 
+app.directive('rootScope', function() {
+  // setup some $rootScope
+  return {
+    controller: [
+    '$rootScope', 
+    '$uibModal', 
+    '$uibModalStack', 
+    function($rootScope, $uibModal, $uibModalStack) {
+      $rootScope.openModal = function(template, data, size) {
+        console.log('openModal('+template+')')
+        if(!size) {
+          var size = 'lg'
+        }
+        var modalInstance = $uibModal.open({
+          templateUrl: 'templates/modals/' + template,
+          size: size,
+          controller: 'ModalCtrl',
+          resolve: {
+            data: data || null
+          }
+        })
+      }
+
+      $rootScope.closeModals = function() {
+        $uibModalStack.dismissAll()
+      }
+    }]
+  }
+})
+
 // generic, stateless modal controller, accepts a data param if needed
 app.controller('ModalCtrl', [
 '$scope',
@@ -48,9 +78,11 @@ function($scope) {
 
 app.controller('DealersCtrl', [
 '$scope',
+'$rootScope',
 'dealerFactory',
-function($scope, dealerFactory) {
+function($scope, $rootScope, dealerFactory) {
     $scope.dealers = dealerFactory.dealers
+    $scope.openModal = $rootScope.openModal
 }])
 
 app.factory('dealerFactory', [
