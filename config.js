@@ -9,6 +9,9 @@ module.exports = {
 	site: {
 		title: process.env.SITE_TITLE || "Redcap Test",
 	},
+	angular: {
+		app: process.env.ANGULAR_APP || "redcapTest"
+	},
 	node: {
 		env: process.env.NODE_ENV || 'development'
 	},
