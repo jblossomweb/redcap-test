@@ -1,3 +1,23 @@
 .container
-  h1 Hello World
-  p {{ foo }}
+  .row
+    .col-md-12
+      h1
+        a(href="")
+          img(src="http://www.redcapvalet.com/images/logo3.png")
+      h3 Dealerships
+  .row
+    .col-md-2
+        b Name
+    .col-md-2
+        b City
+    .col-md-6
+        b Website
+    .col-md-2
+        |&nbsp;
+  .row(ng-repeat="dealer in dealers")
+    .col-md-2 {{ dealer.name }}
+    .col-md-2 {{ dealer.city }}
+    .col-md-6
+        a(href="{{ dealer.website }}" target="_blank") {{ dealer.website }}
+    .col-md-2
+        button.btn.btn-small.btn-primary Do Something

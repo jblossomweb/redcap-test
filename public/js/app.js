@@ -8,7 +8,12 @@ function($stateProvider, $urlRouterProvider) {
     .state('home', {
       url: '/home',
       templateUrl: 'templates/home',
-      controller: 'HomeCtrl'
+      controller: 'HomeCtrl',
+      resolve: {
+        dealerPromise: ['dealerFactory', function(dealerFactory){
+            return dealerFactory.list()
+        }]
+      }
     })
 
     $urlRouterProvider.otherwise('home')
@@ -16,6 +21,25 @@ function($stateProvider, $urlRouterProvider) {
 
 app.controller('HomeCtrl', [
 '$scope',
-function($scope) {
-    $scope.foo = 'this is the content of foo'
+'dealerFactory',
+function($scope, dealerFactory) {
+    $scope.dealers = dealerFactory.dealers
+}])
+
+app.factory('dealerFactory', [
+'$http', 
+function($http) {
+    var obj = {
+        dealers: []
+    }
+    var apiBase = '/api/' // decouple here if needed
+
+    obj.list = function list() {
+        return $http.get(apiBase+'dealers').success(function(data){
+          angular.copy(data, obj.dealers)
+        }).error(function(error){
+            console.error(error)
+        })
+    }
+    return obj
 }])
