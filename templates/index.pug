@@ -4,6 +4,8 @@ html
     meta(name="viewport", content="width=device-width, height=device-height, user-scalable=no")
     meta(name="apple-mobile-web-app-capable", content="yes")
     link(href="libs/bootswatch-dist/css/bootstrap.min.css", rel="stylesheet")
+    link(href="libs/angular-google-places-autocomplete/dist/autocomplete.min.css", rel="stylesheet")
+
     link(href="css/style.css", rel="stylesheet")
       
   body(ng-app=app, root-scope, autoscroll="true")
@@ -13,10 +15,13 @@ html
           img(src="http://www.redcapvalet.com/images/logo3.png")
     ui-view
 
+    script(src="https://maps.googleapis.com/maps/api/js?libraries=places")
+
     script(src="libs/angular/angular.min.js")
     script(src="libs/angular-ui-router/release/angular-ui-router.min.js")
     script(src="libs/angular-bootstrap/ui-bootstrap.min.js")
     script(src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js")
     script(src="libs/angular-smart-table/dist/smart-table.min.js")
+    script(src="libs/angular-google-places-autocomplete/dist/autocomplete.min.js")
     
     script(src="js/app.js")

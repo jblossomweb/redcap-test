@@ -1,4 +1,4 @@
-var app = angular.module('redcapTest', ['ui.router', 'ui.bootstrap', 'smart-table'])
+var app = angular.module('redcapTest', ['ui.router', 'ui.bootstrap', 'smart-table', 'google.places'])
 
 app.config([
 '$stateProvider',
