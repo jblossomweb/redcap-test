@@ -15,7 +15,7 @@ html
           img(src="http://www.redcapvalet.com/images/logo3.png")
     ui-view
 
-    script(src="https://maps.googleapis.com/maps/api/js?libraries=places")
+    script(src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry")
 
     script(src="libs/angular/angular.min.js")
     script(src="libs/angular-ui-router/release/angular-ui-router.min.js")
@@ -23,5 +23,16 @@ html
     script(src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js")
     script(src="libs/angular-smart-table/dist/smart-table.min.js")
     script(src="libs/angular-google-places-autocomplete/dist/autocomplete.min.js")
+    script(src="libs/ngmap/build/scripts/ng-map.min.js")
     
     script(src="js/app.js")
+    script(src="js/config.js")
+
+    script(src="js/services/dealer.factory.js")
+
+    script(src="js/directives/root.scope.js")
+    script(src="js/directives/dealers.form.js")
+
+    script(src="js/controllers/modal.js")
+    script(src="js/controllers/home.js")
+    script(src="js/controllers/dealers.js")

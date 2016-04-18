@@ -1,0 +1,70 @@
+form.dealer-form(name="dealerForm", novalidate)
+  
+  .row(ng-hide="search")
+    //- (ng-show="!search || name.length < 1 || address.length < 1")
+    .col-md-12.form-group
+      .input-group.input-group-sm.full-width
+        span.input-group-addon
+          span.glyphicon.glyphicon-search
+        input.form-control(type="text", g-places-autocomplete, force-selection="true", ng-model="search", placeholder="Search", autofocus="true")
+  
+  .row(ng-show="errors.length > 0")
+    .col-md-12
+      .bs-component
+        .alert.alert-dismissable.alert-danger(ng-repeat="(i, error) in errors")
+          button(type="button", class="close", data-dismiss="alert", ng-click="removeError(i)") x
+          strong {{ error.message }}
+
+
+  .row(ng-show="search")
+    //- (ng-hide="!search || name.length < 1 || address.length < 1")
+    .col-md-8
+      
+      .form-group
+        .input-group.input-group-sm.full-width(ng-class="classes.name")
+          span.input-group-addon Name
+          input.form-control(type="text", name="name", ng-model="dealer.name", placeholder="Name", required)
+      
+      .form-group
+        .input-group.input-group-sm.full-width.multi-input(ng-class="classes.addressGroup")
+          span.input-group-addon Address
+          .input-group.input-group-sm.full-width(ng-class="classes.address")
+            input.form-control(type="text", name="address", ng-model="dealer.address", placeholder="Street", required)
+          .input-group.input-group-sm.pull-left(ng-class="classes.city")
+            input.form-control(type="text", name="city", ng-model="dealer.city", size="29", placeholder="City", required)
+          .input-group.input-group-sm.pull-left(ng-class="classes.state")
+            input.form-control(type="text", name="state", ng-model="dealer.state", size="3", placeholder="State", ng-minlength="2", ng-maxlength="2", ng-pattern="regex.state", required)
+          .input-group.input-group-sm.pull-left(ng-class="classes.zip")
+            input.form-control(type="text", name="zip", ng-model="dealer.zip", size="10", placeholder="Zip", ng-minlength="5", ng-maxlength="5", ng-pattern="regex.integer", required)
+      
+      .form-group
+        .input-group.input-group-sm.full-width(ng-class="classes.website")
+          span.input-group-addon Website
+          input.form-control(type="text", name="website", ng-model="dealer.website", ng-pattern="regex.url", placeholder="http://", required)
+          a.input-group-addon.btn.btn-sm.btn-info(ng-show="dealerForm.website.$valid", href="{{dealer.website}}", target="_blank", style="width:30px")
+            span.glyphicon.glyphicon-globe
+      .form-group
+        .input-group.input-group-sm.full-width.multi-input(ng-class="classes.coordinates")
+          span.input-group-addon Coordinates
+          .input-group.input-group-sm.pull-left(ng-class="classes.lat")
+            input.form-control(type="text", name="lat", ng-model="dealer.lat", ng-pattern="regex.decimal", placeholder="Latitude", required)
+          .input-group.input-group-sm.pull-left(ng-class="classes.lng")
+            input.form-control(type="text", name="lng", ng-model="dealer.lng", ng-pattern="regex.decimal", placeholder="Longitude", required)
+      
+      .form-group
+        .input-group.input-group-sm.full-width(ng-class="classes.sales")
+          span.input-group-addon Sales
+          input.form-control(type="text", name="sales", ng-model="dealer.sales", placeholder="(XXX) XXX-XXXX", required)
+      
+      .form-group
+        .input-group.input-group-sm.full-width(ng-class="classes.service")
+          span.input-group-addon Service
+          input.form-control(type="text", name="service", ng-model="dealer.service", placeholder="(XXX) XXX-XXXX", required)
+
+    .col-md-4
+      map(center="current-location", zoom="14", style="height:320px")
+
+  //- .row
+  //-   .col-md-12
+  //-     button.btn.btn-sm.btn-success.pull-right(ng-show="validated", ng-click="submitForm()", style="margin-left:8px") Save
+      

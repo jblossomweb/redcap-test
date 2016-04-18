@@ -1,3 +1,9 @@
 .modal-container
   h2 Add New Dealership
-  p foo
+  hr
+  dealer-form(form-type="create", form-scope="data.form")
+  hr
+  .row
+    .col-md-12
+      button.btn.btn-sm.btn-success.pull-right(ng-show="dealerFormValid", ng-click="createDealer()", style="margin-left:8px") Save
+      button.btn.btn-sm.btn-danger.pull-right(ng-click="cancel()") Cancel

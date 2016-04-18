@@ -17,4 +17,9 @@ router.get('/modals/:template', function(req, res, next) {
   res.render('modals/'+view+'.'+engine)
 })
 
+router.get('/directives/:template', function(req, res, next) {
+  var view = req.params.template
+  res.render('directives/'+view+'.'+engine)
+})
+
 module.exports = router

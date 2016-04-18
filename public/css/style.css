@@ -2,6 +2,9 @@
 .pointer {
   cursor:pointer;
 }
+.full-width {
+  width:100%;
+}
 .st-sort-ascent:after {
   content: '\25B2';
 }
@@ -11,3 +14,26 @@
 .modal-container {
   padding:12px;
 }
+.pac-container {
+  z-index: 9000;
+}
+.pac-container:after {
+  height: 18px;
+  background-image: url(//developers.google.com/places/documentation/images/powered-by-google-on-white.png);
+  background-size: 144px 18px;
+}
+
+.dealer-form .input-group-addon {
+  width:100px;
+}
+
+.dealer-form .input-group .input-group {
+  /*margin-right:4px;*/
+}
+.dealer-form .input-group .input-group input {
+  /*margin-top:-2px;*/
+}
+
+/*.dealer-form .input-group .input-group:first input {
+  margin-top:0px;
+}*/
