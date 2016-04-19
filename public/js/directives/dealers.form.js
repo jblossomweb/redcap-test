@@ -45,8 +45,9 @@ app.directive('dealerForm', function() {
       }
 
       $scope.populate = function(dealer) {
-        // clear visible errors
+        // clear visible alerts
         $scope.errors = []
+        $scope.success = null
 
         // repopulate fields
         $scope.dealer = dealer
@@ -105,7 +106,7 @@ app.directive('dealerForm', function() {
         $scope.errors.splice(i, 1)
       }
 
-      $scope.removeSuccess = function removeSuccess(i) {
+      $scope.removeSuccess = function removeSuccess() {
         $scope.success = false
       }
 
