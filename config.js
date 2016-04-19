@@ -16,7 +16,7 @@ module.exports = {
 		env: process.env.NODE_ENV || 'development'
 	},
 	express: {
-		port: process.env.EXPRESS_PORT || 3000
+		port: process.env.EXPRESS_PORT || process.env.PORT || 3000
 	},
 	db: {
 		type: 'mysql'
