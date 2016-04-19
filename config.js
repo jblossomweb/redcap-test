@@ -22,6 +22,6 @@ module.exports = {
 		type: 'mysql'
 	},
   mysql: {
-    connection: process.env.MYSQL_CONNECTION
+    connection: process.env.MYSQL_CONNECTION || process.env.CLEARDB_DATABASE_URL
   }
 }
