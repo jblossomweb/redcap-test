@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "app.js"
+    "start": "npm install;bower install;node app"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
