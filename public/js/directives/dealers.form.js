@@ -19,7 +19,7 @@ app.directive('dealerForm', function() {
         state: /^[A-Z]+$/,
         integer: /^\d+$/,
         decimal: /^[+-]?(\d*\.)?\d+$/,
-        url: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-\?]*)*\/?$/
+        url: /^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\?=&\/\w \.-]*)*\/?$/
       }
 
       $rootScope.createDealer = function createDealer() {
