@@ -1,4 +1,4 @@
-table.table.table-striped(st-table="dealers")
+table.table.table-striped(st-table="dealersDisplay", st-safe-src="dealers")
   thead
     tr
       th.pointer(st-sort="name") Name
@@ -14,7 +14,7 @@ table.table.table-striped(st-table="dealers")
         input.input-sm.form-control(type="search" st-search="state" placeholder="filter")
       th &nbsp;
   tbody
-    tr(ng-repeat="dealer in dealers")
+    tr(ng-repeat="dealer in dealersDisplay")
       td {{ dealer.name }}
       td {{ dealer.city }}
       td {{ dealer.state }}

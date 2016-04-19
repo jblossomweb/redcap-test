@@ -28,6 +28,10 @@ app.directive('dealerForm', function() {
         $scope.removeSuccess()
         dealerFactory.create($scope.dealer, function(error, dealer){
           if(error) {
+            // should only happen if user hacks the form
+            if(!error.message) {
+              error.message = "Dealership was not added. Check form for invalid fields."
+            }
             $scope.errors.push(error)
           } else {
             $scope.clearSearch()
