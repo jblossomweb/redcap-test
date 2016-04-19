@@ -12,7 +12,8 @@ app.directive('dealerForm', function() {
     controller: [
     '$scope',
     '$rootScope',
-    function($scope, $rootScope) {
+    'dealerFactory',
+    function($scope, $rootScope, dealerFactory) {
 
       $scope.errors = []
       $scope.regex = {
@@ -24,6 +25,16 @@ app.directive('dealerForm', function() {
 
       $rootScope.createDealer = function createDealer() {
         console.log("createDealer()")
+        $scope.removeSuccess()
+        dealerFactory.create($scope.dealer, function(error, dealer){
+          if(error) {
+            $scope.errors.push(error)
+          } else {
+            $scope.clearSearch()
+            $scope.errors = []
+            $scope.success = "Successfully added "+dealer.name
+          }
+        })
       }
       $rootScope.updateDealer = function updateDealer(id) {
         console.log("updateDealer("+id+")")
@@ -88,6 +99,10 @@ app.directive('dealerForm', function() {
 
       $scope.removeError = function removeError(i) {
         $scope.errors.splice(i, 1)
+      }
+
+      $scope.removeSuccess = function removeSuccess(i) {
+        $scope.success = false
       }
 
       $scope.clearSearch()

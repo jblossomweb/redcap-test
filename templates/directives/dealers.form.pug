@@ -8,6 +8,13 @@ form.dealer-form(name="dealerForm", novalidate)
           span.glyphicon.glyphicon-search
         input.form-control(type="text", g-places-autocomplete, force-selection="true", ng-model="search", placeholder="Search", autofocus="true")
   
+  .row(ng-show="success")
+    .col-md-12
+      .bs-component
+        .alert.alert-dismissable.alert-success
+          button(type="button", class="close", data-dismiss="alert", ng-click="removeSuccess()") x
+          strong {{ success }}
+
   .row(ng-show="errors.length > 0")
     .col-md-12
       .bs-component
@@ -17,7 +24,6 @@ form.dealer-form(name="dealerForm", novalidate)
 
 
   .row(ng-show="search")
-    //- (ng-hide="!search || name.length < 1 || address.length < 1")
     .col-md-8
       
       .form-group
