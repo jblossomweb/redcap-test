@@ -23,5 +23,9 @@ module.exports = {
 	},
   mysql: {
     connection: process.env.MYSQL_CONNECTION || process.env.CLEARDB_DATABASE_URL
+  },
+  twilio: {
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN
   }
 }
