@@ -12,7 +12,8 @@ var Dealer = db.define('dealers', {
   lng: Number,
   sales: String,
   service: String,
-  website: String
+  website: String,
+  twilio: String,
 }, {
   methods: {
   }

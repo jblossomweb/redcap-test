@@ -29,6 +29,7 @@ CREATE TABLE `dealers` (
   `lng` float NOT NULL,
   `sales` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `service` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `twilio` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `website` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
