@@ -70,7 +70,7 @@ form.dealer-form(name="dealerForm", novalidate)
         .input-group.input-group-sm.full-width(ng-class="classes.twilio")
           span.input-group-addon RedCap
           select.form-control(type="text", name="twilio", ng-model="dealer.twilio", placeholder="(XXX) XXX-XXXX", required)
-            option(ng-repeat="twilio in twilios", value="twilio.number") {{ twilio.number }}
+            option(ng-repeat="twilio in twilios", ng-value="twilio.number") {{ twilio.number }}
 
     .col-md-4
       map(center="current-location", zoom="14", style="height:320px")
