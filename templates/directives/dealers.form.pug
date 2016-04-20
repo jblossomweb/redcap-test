@@ -1,7 +1,6 @@
 form.dealer-form(name="dealerForm", novalidate)
   
   .row(ng-hide="search")
-    //- (ng-show="!search || name.length < 1 || address.length < 1")
     .col-md-12.form-group
       .input-group.input-group-sm.full-width
         span.input-group-addon
@@ -66,6 +65,12 @@ form.dealer-form(name="dealerForm", novalidate)
         .input-group.input-group-sm.full-width(ng-class="classes.service")
           span.input-group-addon Service
           input.form-control(type="text", name="service", ng-model="dealer.service", placeholder="(XXX) XXX-XXXX", required)
+
+      .form-group
+        .input-group.input-group-sm.full-width(ng-class="classes.twilio")
+          span.input-group-addon RedCap
+          select.form-control(type="text", name="twilio", ng-model="dealer.twilio", placeholder="(XXX) XXX-XXXX", required)
+            option(ng-repeat="twilio in twilios", value="twilio.number") {{ twilio.number }}
 
     .col-md-4
       map(center="current-location", zoom="14", style="height:320px")

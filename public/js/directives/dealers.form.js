@@ -13,7 +13,8 @@ app.directive('dealerForm', function() {
     '$scope',
     '$rootScope',
     'dealerFactory',
-    function($scope, $rootScope, dealerFactory) {
+    'twilioService',
+    function($scope, $rootScope, dealerFactory, twilioService) {
 
       $scope.errors = []
       $scope.regex = {
@@ -24,7 +25,6 @@ app.directive('dealerForm', function() {
       }
 
       $rootScope.createDealer = function createDealer() {
-        console.log("createDealer()")
         $scope.removeSuccess()
         dealerFactory.create($scope.dealer, function(error, dealer){
           if(error) {
@@ -44,13 +44,26 @@ app.directive('dealerForm', function() {
         console.log("updateDealer("+id+")")
       }
 
-      $scope.populate = function(dealer) {
+      $scope.populate = function(dealer, twilioService) {
         // clear visible alerts
         $scope.errors = []
         $scope.success = null
 
         // repopulate fields
         $scope.dealer = dealer
+
+        // do some twilio
+        twilioService.numbers({
+          lat: dealer.lat,
+          lng: dealer.lng
+        }, function(error, numbers) {
+          if(error) {
+            console.error(error)
+          } else {
+            $scope.twilios = numbers
+            $scope.dealer.twilio = numbers[0]
+          }
+        })
       }
 
       $scope.validate = function validate(field) {
@@ -122,6 +135,7 @@ app.directive('dealerForm', function() {
       $scope.$watch("dealer.lng", function(){ $scope.validate('lng') })
       $scope.$watch("dealer.sales", function(){ $scope.validate('sales') })
       $scope.$watch("dealer.service", function(){ $scope.validate('service') })
+      $scope.$watch("dealer.twilio", function(){ $scope.validate('twilio') })
 
       $scope.$watch("search", function(search) {
         if(search) {
@@ -196,7 +210,7 @@ app.directive('dealerForm', function() {
             sales: search.formatted_phone_number,
             service: search.formatted_phone_number,
             website: search.website
-          })
+          }, twilioService)
 
           // reset map marker
           if($scope.marker) {
