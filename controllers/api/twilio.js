@@ -12,10 +12,14 @@ api.numbers = function(req, res, next) {
       if(err){ return next(err) }
       var numbers = []
       results.forEach(function(result) {
-        numbers.push({
-          city: ucfirst(result.rate_center.toLowerCase()),
+        var number = {
           number: result.friendly_name // convenient: already formatted string
-        })
+        }
+        var city = result.rate_center || null
+        if(city){
+          number.city = ucfirst(city.toLowerCase())
+        }
+        numbers.push(number)
       })
       res.status(200).json(numbers)
     })
