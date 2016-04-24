@@ -29,5 +29,6 @@ function mapTwilioParams(params) {
   if(params.lat && params.lng) {
     twilioParams.nearLatLong = params.lat + "," + params.lng
   }
+  twilioParams.distance = 500 // max instead of default 25
   return twilioParams
 }
