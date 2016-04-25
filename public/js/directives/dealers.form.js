@@ -84,7 +84,15 @@ app.directive('dealerForm', function() {
               if(!found || !found.number) {
                 $scope.twilios.push({ number: $scope.dealer.twilio })
               }
+            } else if ($scope.twilios && $scope.twilios.length) {
+              // timesaver: preselect first option
+              $scope.dealer.twilio = $scope.twilios[0].number
             }
+
+            $timeout(function(){
+              $scope.validate('twilio')
+            },100)
+
             callback()
           }
         })
