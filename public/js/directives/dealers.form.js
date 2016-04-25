@@ -3,18 +3,20 @@ app.directive('dealerForm', function() {
     templateUrl: 'templates/directives/dealers.form',
     link: function(scope, element, attrs) {
       scope.formType = attrs.formType
-      scope.formScope = attrs.formScope 
+      scope.dealerId = attrs.dealerId
     },
     scope: {
       formType: "@",
-      formScope: "@"
+      dealerId: "@"
     },
     controller: [
     '$scope',
     '$rootScope',
+    '$filter',
+    '$timeout',
     'dealerFactory',
     'twilioService',
-    function($scope, $rootScope, dealerFactory, twilioService) {
+    function($scope, $rootScope, $filter, $timeout, dealerFactory, twilioService) {
 
       $scope.errors = []
       $scope.regex = {
@@ -41,10 +43,22 @@ app.directive('dealerForm', function() {
         })
       }
       $rootScope.updateDealer = function updateDealer(id) {
-        console.log("updateDealer("+id+")")
+        $scope.removeSuccess()
+        dealerFactory.update($scope.dealer, function(error, dealer){
+          if(error) {
+            // should only happen if user hacks the form
+            if(!error.message) {
+              error.message = "Dealership was not updated. Check form for invalid fields."
+            }
+            $scope.errors.push(error)
+          } else {
+            $scope.errors = []
+            $scope.success = "Successfully updated "+dealer.name
+          }
+        })
       }
 
-      $scope.populate = function(dealer, twilioService) {
+      $scope.populate = function(dealer, twilioService, callback) {
         // clear visible alerts
         $scope.errors = []
         $scope.success = null
@@ -59,9 +73,19 @@ app.directive('dealerForm', function() {
         }, function(error, numbers) {
           if(error) {
             console.error(error)
+            callback()
           } else {
             $scope.twilios = numbers
-            $scope.dealer.twilio = numbers[0]
+
+            if($scope.dealer.twilio) {
+              var found = $scope.twilios.find(function(item) {
+                return item.number == $scope.dealer.twilio
+              })
+              if(!found || !found.number) {
+                $scope.twilios.push({ number: $scope.dealer.twilio })
+              }
+            }
+            callback()
           }
         })
       }
@@ -121,6 +145,46 @@ app.directive('dealerForm', function() {
 
       $scope.removeSuccess = function removeSuccess() {
         $scope.success = false
+      }
+
+      $scope.refreshMap = function refreshMap(position, title) {
+        if(!position) {
+          var position = {
+            lat: $scope.dealer.lat,
+            lng: $scope.dealer.lng
+          }
+        }
+        if(!title) {
+          var title = $scope.dealer.name
+        }
+        // reset map marker
+        if($scope.marker) {
+          $scope.marker.setMap(null)
+          $scope.marker = null
+        }
+        $scope.marker = new google.maps.Marker({
+          position: position,
+          title: title
+        })
+        
+        if($scope.map) {
+
+          $scope.marker.setMap($scope.map)
+
+          // re-center map
+          $scope.map.setCenter(position)
+          $scope.map.setZoom(14)
+          
+          // these are hacks. they also depend on some polluted global scope
+          // TODO: inject google.maps as a service
+          google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+            google.maps.event.trigger($scope.map, 'resize')
+          })
+
+          google.maps.event.addListenerOnce($scope.map, 'resize', function() {
+            $scope.map.setCenter(position)
+          })
+        }
       }
 
       $scope.clearSearch()
@@ -210,38 +274,40 @@ app.directive('dealerForm', function() {
             sales: search.formatted_phone_number,
             service: search.formatted_phone_number,
             website: search.website
-          }, twilioService)
-
-          // reset map marker
-          if($scope.marker) {
-            $scope.marker.setMap(null)
-            $scope.marker = null
-          }
-          $scope.marker = new google.maps.Marker({
-            position: position,
-            title: search.name
-          })
-          $scope.marker.setMap($scope.map)
-
-          // re-center map
-          $scope.map.setCenter(position)
-          $scope.map.setZoom(14)
-
-          // these are hacks. they also depend on some polluted global scope
-          // TODO: inject google.maps as a service
-          google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-            google.maps.event.trigger($scope.map, 'resize')
+          }, twilioService, function(){
+            // empty callback.
           })
 
-          google.maps.event.addListenerOnce($scope.map, 'resize', function() {
-            $scope.map.setCenter(position)
-          })
+          // refresh map
+          $scope.refreshMap(position, search.name)
 
         } else {
           // handle init value (before search)
           $rootScope.dealerFormValid = false
         }
       })
+
+      if($scope.formType == 'update') {
+        dealerFactory.get($scope.dealerId, function(error, dealer) {
+          if(error) {
+            console.error(error)
+          } else {
+            $scope.skipSearch = true
+            $scope.populate(dealer, twilioService, function() {
+              Object.keys(dealer).forEach(function(key){
+                $scope.validate(key)
+              })
+
+              // seems to work better than $scope.watch on 'map'. 
+              // TODO: this properly. delay is a workaround.
+              $timeout(function(){
+                $scope.refreshMap({lat: dealer.lat, lng: dealer.lng}, dealer.name)
+              },250)
+              
+            })
+          }
+        })
+      }
     }]
   }
 })

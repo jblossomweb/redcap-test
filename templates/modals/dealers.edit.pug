@@ -1,0 +1,9 @@
+.modal-container
+  h2 {{ data.name }}
+  hr
+  dealer-form(form-type="update", dealer-id="{{ data.id }}")
+  hr
+  .row
+    .col-md-12
+      button.btn.btn-sm.btn-success.pull-right(ng-show="dealerFormValid", ng-click="updateDealer()", style="margin-left:8px") Save
+      button.btn.btn-sm.btn-danger.pull-right(ng-click="cancel()") Cancel

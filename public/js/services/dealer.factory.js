@@ -1,6 +1,7 @@
 app.factory('dealerFactory', [
 '$http', 
-function($http) {
+'$filter',
+function($http, $filter) {
     var obj = {
         dealers: []
     }
@@ -14,11 +15,20 @@ function($http) {
       })
     }
 
-    obj.get = function get(id) {
+    obj.get = function get(id, callback) {
       return $http.get(apiBase+'dealers/'+id).success(function(data){
-        return data
+        callback(null, data)
       }).error(function(error){
-        console.error(error)
+        callback(error)
+      })
+    }
+
+    obj.update = function update(dealer, callback) {
+      return $http.put(apiBase+'dealers/'+dealer.id, dealer).success(function(data){
+        $filter('filter')(obj.dealers, {id: data.id })[0] = data
+        callback(null, data)
+      }).error(function(error){
+        callback(error)
       })
     }
 

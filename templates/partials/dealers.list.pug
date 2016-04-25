@@ -22,3 +22,7 @@ table.table.table-striped(st-table="dealersDisplay", st-safe-src="dealers")
         a.btn.btn-sm.btn-primary.pull-right(href="{{ dealer.website }}" target="_blank")
           span.glyphicon.glyphicon-globe
           | &nbsp;&nbsp;Website
+
+        a.btn.btn-sm.btn-success.pull-right.pointer(ng-click="openModal('dealers.edit', dealer)", style="margin-right:8px")
+          span.glyphicon.glyphicon-pencil
+          | &nbsp;&nbsp;Edit
