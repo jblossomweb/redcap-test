@@ -23,6 +23,7 @@
     "bootswatch-dist": "flatly",
     "angular-smart-table": "^2.1.8",
     "angular-google-places-autocomplete": "^0.2.7",
-    "ngmap": "^1.17.3"
+    "ngmap": "^1.17.3",
+    "font-awesome": "fontawesome#^4.6.1"
   }
 }
