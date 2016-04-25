@@ -4,12 +4,21 @@ var Service = {}
 
 Service.getLocalNumbers = function(params, callback) {
   if(Object.keys(params).length) {
-    twilio.availablePhoneNumbers('US').local.get(mapTwilioParams(params), function(err, data) {
+    var twilioParams = mapTwilioParams(params)
+    twilio.availablePhoneNumbers('US').local.get(twilioParams, function(err, data) {
       if (err) {
         return callback(err)
       } else {
         if(data.available_phone_numbers) {
-          return callback(null, data.available_phone_numbers)
+          if(data.available_phone_numbers.length === 0 && twilioParams.distance < 500) {
+            // recursively increase distance
+            params.distance = params.distance * 2
+            if(params.distance > 500) { params.distance = 500 }
+            Service.getLocalNumbers(params, callback)
+          } else {
+            return callback(null, data.available_phone_numbers)
+          }
+          
         } else {
           return callback(new Error('service response was invalid'))
         }
@@ -29,6 +38,6 @@ function mapTwilioParams(params) {
   if(params.lat && params.lng) {
     twilioParams.nearLatLong = params.lat + "," + params.lng
   }
-  twilioParams.distance = 500 // max instead of default 25
+  twilioParams.distance = params.distance || 500 // max instead of default 25
   return twilioParams
 }

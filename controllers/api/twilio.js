@@ -7,7 +7,8 @@ api.numbers = function(req, res, next) {
   if(lat && lng) {
     Twilio.getLocalNumbers({
       lat: lat,
-      lng: lng
+      lng: lng,
+      distance: 50 // start here, service will expand radius if none found
     },function (err, results) {
       if(err){ return next(err) }
       var numbers = []
