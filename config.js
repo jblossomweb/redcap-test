@@ -27,5 +27,8 @@ module.exports = {
   twilio: {
     accountSid: process.env.TWILIO_ACCOUNT_SID,
     authToken: process.env.TWILIO_AUTH_TOKEN
+  },
+  google: {
+    mapsKey: process.env.GOOGLE_MAPS_KEY,
   }
 }
