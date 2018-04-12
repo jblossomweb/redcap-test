@@ -287,6 +287,7 @@ app.directive('dealerForm', function() {
           })
 
           // refresh map
+          console.log(`after search refreshing map to ${position.lat}, ${position.lng}`)
           $scope.refreshMap(position, search.name)
 
         } else {
@@ -309,6 +310,7 @@ app.directive('dealerForm', function() {
               // seems to work better than $scope.watch on 'map'. 
               // TODO: this properly. delay is a workaround.
               $timeout(function(){
+                console.log(`after timeout refreshing map to ${dealer.lat}, ${dealer.lng}`)
                 $scope.refreshMap({lat: dealer.lat, lng: dealer.lng}, dealer.name)
               },250)
               

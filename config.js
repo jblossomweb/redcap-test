@@ -30,5 +30,6 @@ module.exports = {
   },
   google: {
     mapsKey: process.env.GOOGLE_MAPS_KEY,
+    mapsScript: process.env.GOOGLE_MAPS_SCRIPT || null
   }
 }
